@@ -1,0 +1,19 @@
+
+jpython:S107‚"MMethod "__init__" has 21 parameters, which is greater than the 13 authorized.( Ğàşüÿÿÿÿ
+rpython:S3776"TRefactor this function to reduce its Cognitive Complexity from 16 to the 15 allowed.(ú„Úüùÿÿÿÿ
+7python:S125Ö"Remove this commented out code.(ÎÌÿ
+rpython:S3776²"TRefactor this function to reduce its Cognitive Complexity from 31 to the 15 allowed.(±Ğ•ªûÿÿÿÿ
+<python:S125Ì"Remove this commented out code.(¯”Ñæıÿÿÿÿ
+Jpython:S1172Œ",Remove the unused function parameter "args".(–£³Šıÿÿÿÿ
+`python:S5799ı"GMerge these implicitly concatenated strings; or did you forget a comma?(®Ç…
+rpython:S3776•"TRefactor this function to reduce its Cognitive Complexity from 17 to the 15 allowed.(—ÑÚøÿÿÿÿ
+Qpython:S1481Ö"3Replace unused local variable "canonname" with "_".(ÄùÀşÿÿÿÿ
+mpython:S3776×"TRefactor this function to reduce its Cognitive Complexity from 17 to the 15 allowed.(Ş £Ã
+Jpython:S4423ı",Change this code to use a stronger protocol.(‡şÓµüÿÿÿÿ
+rpython:S3776Û"TRefactor this function to reduce its Cognitive Complexity from 32 to the 15 allowed.(äæ—úıÿÿÿÿ
+Epython:S1172²",Remove the unused function parameter "keys".(ï¯­
+Mpython:S1172²"4Remove the unused function parameter "command_name".(ï¯­
+Hpython:S1172²"/Remove the unused function parameter "options".(ï¯­
+6python:S3626ö"Remove this redundant return.(ÙãŞŸ
+Gpython:S2638´
+")Add missing parameters inuse_connections.(³Ö·Íúÿÿÿÿ
