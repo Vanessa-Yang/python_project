@@ -2,10 +2,9 @@ import datetime
 import itertools
 import math
 import os
-from typing import Tuple, Any
 
 from PIL import Image as PILImage
-from PIL import ImageFont, ImageDraw, ImageEnhance, ImageFilter
+from PIL import ImageFont, ImageDraw, ImageEnhance
 from wand.image import Image
 
 
@@ -66,7 +65,7 @@ def test_compress_image():
 # 加文字水印
 def add_watermark_util(text, font_size, opacity, rotate, space, image_path, out_path):
     img = Image(filename=image_path)
-    img.resolution = 500 if min(img.resolution) > 500 else img.resolution
+    img.resolution = 300 if min(img.resolution) > 300 else img.resolution
     # img.format = 'PNG'
     # img.alpha_channel = True
     img_width, img_height = img.size
@@ -77,16 +76,13 @@ def add_watermark_util(text, font_size, opacity, rotate, space, image_path, out_
     try:
         watermark = Image(filename=watermark_path)
         w_width, w_height = watermark.size
-        print(f'w_width:{w_width}, w_height: {w_height}')
         left = math.ceil(img_width - w_width - space)
         top = math.ceil(img_height - w_height - space)
-        print(f'left:{left}, top: {top}')
         img.composite(watermark, left=left, top=top, operator='over')
         img.save(filename=out_path)
         img.close()
         watermark.close()
     finally:
-        print("finish")
         os.remove(watermark_path)
 
 
@@ -110,9 +106,9 @@ def generate_water_mark_image(text, font_size, ratio, opacity, rotate):
     text_coordinate = (text_w - w_right, text_h - w_bottom)
 
     # 文字阴影`
-    set_font_shadow(draw_table, text_coordinate, text, font_file)
+    set_font_shadow(draw_table, text_coordinate, text, font_file, ratio)
     draw_table.text(text_coordinate, text=text, fill=(255, 255, 255, 255), font=font_file)
-    # 设置水印图片图名度
+    # 设置水印图片透明度
     set_opacity(water_markimage, opacity)
     if rotate:
         # 水印图片角度翻转
@@ -125,11 +121,11 @@ def generate_water_mark_image(text, font_size, ratio, opacity, rotate):
     return save_path
 
 
-def set_font_shadow(draw_table, text_coordinate, text, font_file):
+def set_font_shadow(draw_table, text_coordinate, text, font_file, ratio):
     shadow_color = (0, 0, 0, 77)
-    for i, j in itertools.product((-5, 0, 5), (-5, 0, 5)):
-        draw_table.text((text_coordinate[0] + i, text_coordinate[1] + j), text, font=font_file, fill=shadow_color)
-    for i, j in itertools.product((-4, 0, 4), (-4, 0, 4)):
+    layer1 = max(math.ceil(ratio * 3), 1)
+    print("raio:", ratio, "layer1:", layer1)
+    for i, j in itertools.product((-1 * layer1, 0, layer1), (-1 * layer1, 0, layer1)):
         draw_table.text((text_coordinate[0] + i, text_coordinate[1] + j), text, font=font_file, fill=shadow_color)
 
 
@@ -146,13 +142,16 @@ def set_opacity(im, opacity):
 
 
 def test_add_watermark():
-    # # in_path = "C:\\Users\\Administrator\\Downloads\\抠图_测试2.png"
-    # in_path = "C:\\Users\\Administrator\\Downloads\\抠图_测试.png"
-    in_path = "E:\\高清素材\\仁恒前湾江上湾\\_DSC1106-编辑.jpg"
-    # in_path = "C:\\Users\Administrator\\Pictures\\1701150874183_13249803byte_4716_未标题11.png"
-    out_path = "C:\\Users\\Administrator\\Downloads\\textmark_DSC1106-编辑.jpg"
-    # out_path = "C:\\Users\\Administrator\\Downloads\\textmark_1701150874183_13249803byte_4716_未标题11.jpg"
-    add_watermark_util("来源：盘子设计团队", 44, 1, 0, 24, in_path, out_path)
+    image_paths = [
+        "C:\\Users\\Administrator\\Pictures\\images_for_test\\segment2.png",
+        "C:\\Users\\Administrator\\Pictures\\images_for_test\\big_image_20000×20000.png",
+        "C:\\Users\\Administrator\\Pictures\\images_for_test\\mini_img.png",
+        "C:\\Users\\Administrator\\Pictures\\images_for_test\\rotate.jpeg"
+    ]
+    for image_path in image_paths:
+        name = image_path.split('\\')[-1]
+        out_path = "C:\\Users\\Administrator\\Downloads\\textmark_" + name
+        add_watermark_util("来源：盘子设计团队", 44, 1, 0, 24, image_path, out_path)
     print("水印添加完成")
 
 
