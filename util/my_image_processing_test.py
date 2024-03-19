@@ -59,7 +59,7 @@ def attempt_download(url, save_path):
 
 
 def test_compress_image():
-    env = "test"
+    env = "prod"
     resize_pix = 2000
     resolution = 200
     quality = 80
@@ -83,8 +83,6 @@ def test_compress_image():
     i = 0
     for url in urls:
         i = i + 1
-        if i < 1452:
-            continue
         if not url.startswith('https://app-test.'):
             print("跳过", i, url)
             continue

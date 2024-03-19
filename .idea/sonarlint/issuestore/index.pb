@@ -42,3 +42,7 @@ E
 util/utils.py,a\a\aae5360591d7a5b312cd5bb3d73d636eddbd1fa2
 P
  util/my_image_processing_test.py,b\1\b1e21f139d2b01bfc1f0c5996e8090739e65fae0
+B
+util/excel_util.py,1\b\1bfd242520b14259a3717050eb677eba392d7bda
+?
+util/scratch.py,c\2\c29345e6b311bad8af030b6bdab0930afdbab14f

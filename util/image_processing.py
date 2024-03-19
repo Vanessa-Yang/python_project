@@ -1,11 +1,37 @@
 import datetime
-import itertools
 import math
 import os
 
-from PIL import Image as PILImage
+import cv2 as cv
+from PIL import Image as PILImage, ImageFilter
 from PIL import ImageFont, ImageDraw, ImageEnhance
 from wand.image import Image
+
+
+# 彩色图像转灰度图像
+def color_to_grayscale():
+    img_color = cv.imread('C:\\Users\\Administrator\\Pictures\\images_for_test\\mini_img.png', cv.IMREAD_COLOR)
+    img_gray = cv.imread('C:\\Users\\Administrator\\Pictures\\images_for_test\\mini_img.png', cv.IMREAD_GRAYSCALE)
+    cv.imshow('grayscale', img_gray)
+    cv.imshow('color', img_color)
+    cv.waitKey(0)
+
+    # 创建灰度图片
+    img_gray_pil = PILImage.fromarray(img_gray)
+
+    # 保存原始灰度图片
+    img_gray_pil.save("../images/original_gray.png")
+
+    # 加透明度参数并保存不同透明度的图片
+    for alpha in [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]:
+        transparent_img = img_gray_pil.copy().convert("RGBA")
+        datas = list(transparent_img.getdata())
+        new_data = []
+        for item in datas:
+            # 设置透明度参数
+            new_data.append((item[0], item[1], item[2], int(255 * alpha)))
+        transparent_img.putdata(new_data)
+        transparent_img.save(f"../images/gray_with_alpha_{alpha}.png")
 
 
 # 图像压缩
@@ -93,6 +119,8 @@ def generate_water_mark_image(text, font_size, ratio, opacity, rotate):
     rotate = 0 if not rotate else rotate
     text_w = math.ceil(len(text) * font_size + 10)
     text_h = math.ceil(font_size * 2)
+    blur_radius = 10 * ratio
+    print(blur_radius)
 
     # 创建空白画布
     water_markimage = PILImage.new('RGBA', (text_w, text_h))
@@ -106,8 +134,10 @@ def generate_water_mark_image(text, font_size, ratio, opacity, rotate):
     text_coordinate = (text_w - w_right, text_h - w_bottom)
 
     # 文字阴影`
-    set_font_shadow(draw_table, text_coordinate, text, font_file, ratio)
+    # set_font_shadow(draw_table, text_coordinate, text, font_file, ratio)
+    water_markimage.filter(ImageFilter.GaussianBlur)
     draw_table.text(text_coordinate, text=text, fill=(255, 255, 255, 255), font=font_file)
+
     # 设置水印图片透明度
     set_opacity(water_markimage, opacity)
     if rotate:
@@ -122,11 +152,10 @@ def generate_water_mark_image(text, font_size, ratio, opacity, rotate):
 
 
 def set_font_shadow(draw_table, text_coordinate, text, font_file, ratio):
-    shadow_color = (0, 0, 0, 77)
-    layer1 = max(math.ceil(ratio * 3), 1)
-    print("raio:", ratio, "layer1:", layer1)
-    for i, j in itertools.product((-1 * layer1, 0, layer1), (-1 * layer1, 0, layer1)):
-        draw_table.text((text_coordinate[0] + i, text_coordinate[1] + j), text, font=font_file, fill=shadow_color)
+    gap = max(ratio * 2.5, 0.1)
+    print("ratio:", ratio, "gap:", gap)
+    draw_table.text((text_coordinate[0] + gap, text_coordinate[1] + gap), text, font=font_file,
+                    fill=(128, 128, 128, 255))
 
 
 def set_opacity(im, opacity):
@@ -143,18 +172,20 @@ def set_opacity(im, opacity):
 
 def test_add_watermark():
     image_paths = [
-        "C:\\Users\\Administrator\\Pictures\\images_for_test\\segment2.png",
-        "C:\\Users\\Administrator\\Pictures\\images_for_test\\big_image_20000×20000.png",
+        # "C:\\Users\\Administrator\\Pictures\\images_for_test\\segment2.png",
+        # "C:\\Users\\Administrator\\Pictures\\images_for_test\\big_image_20000×20000.png",
         "C:\\Users\\Administrator\\Pictures\\images_for_test\\mini_img.png",
-        "C:\\Users\\Administrator\\Pictures\\images_for_test\\rotate.jpeg"
+        # "C:\\Users\\Administrator\\Pictures\\images_for_test\\rotate.jpeg",
+        # "C:\\Users\\Administrator\\Downloads\\mini_pic.png"
     ]
     for image_path in image_paths:
         name = image_path.split('\\')[-1]
-        out_path = "C:\\Users\\Administrator\\Downloads\\textmark_" + name
+        out_path = "C:\\Users\\Administrator\\Downloads\\textmark2_" + name
         add_watermark_util("来源：盘子设计团队", 44, 1, 0, 24, image_path, out_path)
     print("水印添加完成")
 
 
 if __name__ == '__main__':
     # test_compress_image()
-    test_add_watermark()
+    # test_add_watermark()
+    color_to_grayscale()

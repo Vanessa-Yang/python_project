@@ -3,10 +3,14 @@ from urllib.parse import quote
 
 from obs import ObsClient
 
+# TODO 推送代码前：必须注释，临时使用，用完即删
+AK = "W2QOGAAHZZCIPHSA6BME"
+SK = "KKXCGoPSnZta4odeSvg3DN6D1KybYLQN6Lg07E8d"
+OBS_ADDR = "obs.cn-east-2.myhuaweicloud.com"
 
-AK = ""
-SK = ""
-OBS_ADDR = ""
+# AK = ""
+# SK = ""
+# OBS_ADDR = ""
 
 def upload_file_to_obs(client, obs_address, bucket, obj_name, file):
     resp = client.putFile(bucket, obj_name, file)
