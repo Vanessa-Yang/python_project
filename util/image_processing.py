@@ -194,11 +194,15 @@ def test_add_watermark():
 
 
 # 判断是否为模糊图像
-def blurry_detect(image_path, threshold=1500):
+def blurry_detect(image_path, threshold=1500, shape=(1080, 1920)):
     if threshold < 1:
         threshold = 1500
     # 灰度化
     img = cv2.imread(image_path)
+    h,w = img.shape[0], img.shape[1]
+    resize_ratio = min(shape[1] / w, shape[0] / h)
+
+    img = cv2.resize(img,  (int(w * resize_ratio), int(h * resize_ratio)))
     gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     print(gray_img.shape)
 
@@ -216,7 +220,7 @@ def blurry_detect(image_path, threshold=1500):
             text = "Local Blurry"
 
     # 显示结果
-    cv2.putText(img, "{}: {:.2f}".format(text, fm), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
+    cv2.putText(img, "{}: {:.2f}".format(text, fm), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
     cv2.imshow('Image', img)
     cv2.waitKey(0)
     cv2.destroyWindow('Image')
@@ -227,14 +231,14 @@ def local_blur_detect(fm, gray_img, img, threshold):
     # 分四个区域再次检测，模糊区域两个及以上则视为模糊
     blur_count = 0
     sep_count = 2 if fm < 1000 else 3
-    w, h = gray_img.shape
+    h, w = gray_img.shape
     mid_x, mid_y = int(w // 2), int(h // 2)
     error_x, error_y = w % 2, h % 2
     _img = img.copy()
-    img1 = _img[0:(mid_x + error_x), 0:(mid_y + error_y)]
-    img2 = _img[mid_x: w, 0:(mid_y + error_y)]
-    img3 = _img[0:(mid_x + error_x), mid_y: h]
-    img4 = _img[mid_x:w, mid_y: h]
+    img1 = _img[0:(mid_y + error_y), 0:(mid_x + error_x)]
+    img2 = _img[0:(mid_y + error_y), mid_x: w]
+    img3 = _img[mid_y: h, 0:(mid_x + error_x)]
+    img4 = _img[mid_y: h, mid_x:w]
     fm1 = laplacian_var(cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY))
     fm2 = laplacian_var(cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY))
     fm3 = laplacian_var(cv2.cvtColor(img3, cv2.COLOR_BGR2GRAY))
@@ -248,13 +252,13 @@ def local_blur_detect(fm, gray_img, img, threshold):
     local_text3 = BLURRY if fm3 < threshold else NOT_BLURRY
     local_text4 = BLURRY if fm4 < threshold else NOT_BLURRY
     # 展示多个
-    cv2.putText(img1, "{}: {:.2f}".format(local_text1, fm1), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255),
+    cv2.putText(img1, "{}: {:.2f}".format(local_text1, fm1), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 255),
                 2)
-    cv2.putText(img2, "{}: {:.2f}".format(local_text2, fm2), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255),
+    cv2.putText(img2, "{}: {:.2f}".format(local_text2, fm2), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 255),
                 2)
-    cv2.putText(img3, "{}: {:.2f}".format(local_text3, fm3), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255),
+    cv2.putText(img3, "{}: {:.2f}".format(local_text3, fm3), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 255),
                 2)
-    cv2.putText(img4, "{}: {:.2f}".format(local_text4, fm4), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255),
+    cv2.putText(img4, "{}: {:.2f}".format(local_text4, fm4), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 255),
                 2)
     # 图集
     imgs = np.hstack((img1, img2, img3, img4))
@@ -285,4 +289,4 @@ if __name__ == '__main__':
     for image_name in os.listdir(folder_path):
         _image_path = os.path.join(folder_path, image_name)
         print(_image_path)
-        blurry_detect(_image_path, 350)
+        blurry_detect(_image_path, 100, (1080, 1920))
