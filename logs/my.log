@@ -1,0 +1,24 @@
+Wed 19 Jun 2024 18:51:08 pdf_util.py WARNING 跳过特定文件夹 'Z:\格度产品录入\exe'
+Wed 19 Jun 2024 18:51:08 pdf_util.py INFO Z:\格度产品录入\柜体-完成
+Wed 19 Jun 2024 18:51:09 pdf_util.py INFO   dealing with pdf: 'System Cabinet 系统钢柜\5. Training Materials 培训文件\System Cabinet - TM_ZH、系统钢柜 - 培训文件中文版.pdf'
+Wed 19 Jun 2024 18:51:09 pdf_util.py INFO     跳过处理...
+Wed 19 Jun 2024 18:51:09 pdf_util.py WARNING 跳过非文件夹路径 'Z:\格度产品录入\格度产品数据导入模板.xlsx'
+Wed 19 Jun 2024 18:51:09 pdf_util.py INFO Z:\格度产品录入\椅子-完成
+Wed 19 Jun 2024 18:51:09 pdf_util.py INFO   dealing with pdf: 'Bana Lounge Chair 芭娜休闲椅-已传官网\5. Training Materials 培训文件\Bana lounge chair - TM_ZH、芭娜休闲椅 - 培训文件中文版.pdf'
+Wed 19 Jun 2024 18:51:09 pdf_util.py INFO     跳过处理...
+Wed 19 Jun 2024 18:51:09 pdf_util.py INFO Z:\格度产品录入\沙发-完成
+Wed 19 Jun 2024 18:51:09 pdf_util.py INFO   dealing with pdf: 'Ava sofa 艾娃沙发 - 已传官网\5. Training Materials 培训文件\艾娃沙发 Ava sofa 培训文件_20240618150950.pdf'
+Wed 19 Jun 2024 18:51:09 pdf_util.py INFO     跳过处理...
+Wed 19 Jun 2024 18:51:09 pdf_util.py INFO Conversion finished within 0.555 seconds
+Wed 19 Jun 2024 18:51:13 pdf_util.py WARNING 跳过特定文件夹 'Z:\格度产品录入\exe'
+Wed 19 Jun 2024 18:51:13 pdf_util.py INFO Z:\格度产品录入\柜体-完成
+Wed 19 Jun 2024 18:51:13 pdf_util.py INFO   dealing with pdf: 'System Cabinet 系统钢柜\5. Training Materials 培训文件\System Cabinet - TM_ZH、系统钢柜 - 培训文件中文版.pdf'
+Wed 19 Jun 2024 18:51:13 pdf_util.py INFO     跳过处理...
+Wed 19 Jun 2024 18:51:13 pdf_util.py WARNING 跳过非文件夹路径 'Z:\格度产品录入\格度产品数据导入模板.xlsx'
+Wed 19 Jun 2024 18:51:13 pdf_util.py INFO Z:\格度产品录入\椅子-完成
+Wed 19 Jun 2024 18:51:13 pdf_util.py INFO   dealing with pdf: 'Bana Lounge Chair 芭娜休闲椅-已传官网\5. Training Materials 培训文件\Bana lounge chair - TM_ZH、芭娜休闲椅 - 培训文件中文版.pdf'
+Wed 19 Jun 2024 18:51:13 pdf_util.py INFO     跳过处理...
+Wed 19 Jun 2024 18:51:13 pdf_util.py INFO Z:\格度产品录入\沙发-完成
+Wed 19 Jun 2024 18:51:13 pdf_util.py INFO   dealing with pdf: 'Ava sofa 艾娃沙发 - 已传官网\5. Training Materials 培训文件\艾娃沙发 Ava sofa 培训文件_20240618150950.pdf'
+Wed 19 Jun 2024 18:51:13 pdf_util.py INFO     跳过处理...
+Wed 19 Jun 2024 18:51:13 pdf_util.py INFO Conversion finished within 0.637 seconds

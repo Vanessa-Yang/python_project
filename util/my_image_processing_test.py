@@ -99,8 +99,8 @@ def test_compress_image():
                 continue
             os.remove(save_path)
             # 上传覆盖原图
-            utils.upload_file_to_obs(obs_client, "obs.cn-east-2.myhuaweicloud.com", "app-test",
-                                           urlName, out_full_path)
+            # utils.upload_file_to_obs(obs_client, "obs.cn-east-2.myhuaweicloud.com", "app-test",
+            #                                urlName, out_full_path)
             os.remove(out_full_path)
         except Exception as ex:
             errorNo.append(i)
